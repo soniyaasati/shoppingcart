@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { MessengerService } from 'src/app/services/messenger.service'
-import { Product } from 'src/app/models/product';
+import { Component, OnInit } from "@angular/core";
+import { MessengerService } from "src/app/services/messenger.service";
+import { Product } from "src/app/models/product";
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  selector: "app-cart",
+  templateUrl: "./cart.component.html",
+  styleUrls: ["./cart.component.css"],
 })
 export class CartComponent implements OnInit {
-
   cartItems = [
     // { id: 1, proudctId: 1, productName: 'Test 1', qty: 4, price: 100 },
     // { id: 2, proudctId: 3, productName: 'Test 3', qty: 5, price: 50 },
@@ -16,24 +15,23 @@ export class CartComponent implements OnInit {
     // { id: 4, proudctId: 4, productName: 'Test 4', qty: 2, price: 200 },
   ];
 
-  cartTotal = 0
+  cartTotal = 0;
 
-  constructor(private msg: MessengerService) { }
+  constructor(private msg: MessengerService) {}
 
   ngOnInit() {
     this.msg.getMsg().subscribe((product: Product) => {
-      this.addProductToCart(product)
-    })
+      this.addProductToCart(product);
+    });
   }
 
   addProductToCart(product: Product) {
-
-    let productExists = false
+    let productExists = false;
 
     for (let i in this.cartItems) {
       if (this.cartItems[i].productId === product.id) {
-        this.cartItems[i].qty++
-        productExists = true
+        this.cartItems[i].qty++;
+        productExists = true;
         break;
       }
     }
@@ -43,8 +41,8 @@ export class CartComponent implements OnInit {
         productId: product.id,
         productName: product.name,
         qty: 1,
-        price: product.price
-      })
+        price: product.price,
+      });
     }
     // if (this.cartItems.length === 0) {
     //   this.cartItems.push({
@@ -68,10 +66,9 @@ export class CartComponent implements OnInit {
     //   }
     // }
 
-    this.cartTotal = 0
-    this.cartItems.forEach(item => {
-      this.cartTotal += (item.qty * item.price)
-    })
+    this.cartTotal = 0;
+    this.cartItems.forEach((item) => {
+      this.cartTotal += item.qty * item.price;
+    });
   }
-
 }
